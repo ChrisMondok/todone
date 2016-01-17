@@ -1,21 +1,10 @@
-var restify = require('restify');
-var Sequelize = require('sequelize');
-var sequelize = new Sequelize('database', 'username', 'password', {
-	dialect: 'sqlite',
-	storage: 'database.db'
-});
+const restify = require('restify');
+const ActivitiesEndpoint = require('./activities/ActivitiesEndpoint.js');
 
-var ActivitiesEndpoint = require('./ActivitiesEndpoint.js');
-
-var server = restify.createServer();
-
-var appContext = {
-	server: server,
-	sequelize: sequelize
-};
+const server = restify.createServer();
 
 server.use(restify.bodyParser({ mapParams: false }));
 
-new ActivitiesEndpoint(appContext);
+new ActivitiesEndpoint(server);
 
-server.listen(8080);
+server.listen(1024);

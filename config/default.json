@@ -1,0 +1,6 @@
+{
+	"database": {
+		"db": "data",
+		"host": "localhost"
+	}
+}
