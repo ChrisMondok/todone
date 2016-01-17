@@ -18,6 +18,7 @@ util.inherits(ActivitiesEndpoint, require('../Endpoint.js'));
 
 ActivitiesEndpoint.prototype.getAll = function(request, connection) {
 	return r.table('activities')
+		.orderBy({index: 'date'})
 		.run(connection)
 		.then(function(cursor) {
 			return cursor.toArray();
