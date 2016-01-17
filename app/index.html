@@ -1,0 +1,34 @@
+<!doctype html>
+<html>
+	<head>
+		<title> Hello World </title>
+		<link rel="stylesheet" type="text/css" href="style.css"/>
+		<script src="script.js" > </script>
+	</head>
+	<body>
+		<ol>
+		</ol>
+		<form method="POST" action="/api/activities">
+			<fieldset>
+				<legend> Create Activity </legend>
+				<label>
+					Name
+					<input name="name" />
+				</label>
+
+				<label>
+					Date
+					<input name="date" type="date" />
+				</label>
+
+				<label>
+					Time
+					<input name="time" type="time" />
+				</label>
+
+				<button> Save </button>
+			</fieldset>
+		</form>
+	</body>
+</html>
+
