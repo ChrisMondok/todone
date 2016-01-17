@@ -1,5 +1,5 @@
 var dateRE = /\d{4}-\d{2}-\d{2}/;
-var timeRE = /\d{2}:\d{2}:\d{2}/;
+var timeRE = /\d{2}:\d{2}(:\d{2})?/;
 
 var required = ['name', 'date', 'time'];
 
