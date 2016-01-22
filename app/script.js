@@ -15,6 +15,7 @@ addEventListener('load', function() {
 			req.addEventListener('load', function(loadEvent) {
 				if(req.status == 200) {
 					activities.push(hydrateActivity(JSON.parse(req.responseText)));
+					sortActivities();
 					renderActivities();
 					closeDrawer();
 				}
@@ -53,13 +54,18 @@ function getActivities() {
 	req.open('GET', '/api/activities');
 	req.addEventListener('load', function(e) {
 		activities = parseActivities(req.response);
+		sortActivities();
 		renderActivities();
 	});
 	req.send();
 }
 
 function parseActivities(json) {
-	return JSON.parse(json).map(hydrateActivity).sort(function(x, y) {
+	return JSON.parse(json).map(hydrateActivity);
+}
+
+function sortActivities() {
+	activities.sort(function(x, y) {
 		return x.time - y.time;
 	});
 }
