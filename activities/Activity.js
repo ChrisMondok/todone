@@ -21,6 +21,8 @@ function Activity(json) {
 	this.name = json.name;
 	this.date = json.date;
 	this.time = json.time;
+	if('color' in json)
+		this.color = json.color;
 }
 
 module.exports = Activity;
