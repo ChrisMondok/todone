@@ -1,14 +1,128 @@
-input {
-	display: block;
+body {
+	color: white;
+	background-color: #444;
 }
+.toolbar, .toolbar-space-eater {
+	height: 32px;
+}
+
+.toolbar {
+	background-color: black;
+	line-height: 32px;
+	text-align: center;
+}
+
+.bottom {
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	right: 0;
+}
+
+.drawer {
+	background-color: black;
+	text-align: center;
+	-webkit-transition: -webkit-transform 0.25s ease-in-out, box-shadow 0.25s ease-in-out;
+	transition: transform 0.25s ease-in-out, box-shadow 0.25s ease-in-out;
+	overflow: auto;
+	max-height: 90vh;
+}
+
+.drawer.closed {
+	-webkit-transform: translateY(100%);
+	transform: translateY(100%);
+	box-shadow: 0px 0px 0px transparent;
+}
+
+.drawer.open {
+	-webkit-transform: translateY(0%);
+	box-shadow: 0px -4px 32px rgba(0, 0, 0, 0.45);
+}
+
+.blurry {
+	-webkit-filter: blur(4px);
+	filter: blur(4px);
+}
+
 label {
 	display: block;
+	padding: 1em;
 }
 
-label + label{
-	margin-top: 15px;
+input {
+	display: block;
+	width: 320px;
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
 }
 
-form {
-	padding: 15px;
+.create-form {
+	display: inline-block;
+	margin: auto;
+	text-align: left;
+}
+
+.create-form button[type=submit] {
+	width: 320px;
+	display: block;
+	margin: 0 auto;
+}
+
+header {
+	padding: 0.5em;
+}
+
+header button {
+	float: right;
+}
+
+.activity {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	margin: 4px 0;
+}
+
+.activity-node {
+	background-color: white;
+	border: 4px solid black;
+	height: 24px;
+	width: 24px;
+	border-radius: 50%;
+	box-sizing: border-box;
+}
+.activity-label{
+	color: #222;
+	background-color: #EEE;
+	margin: 0 1em;
+	padding-left: 5%;
+	-webkit-clip-path: polygon(0% 50%, 5% 0%, 100% 0%, 95% 50%, 100% 100%, 5% 100%);
+	flex: 1 1 auto;
+}
+
+.divider {
+	margin: 1em;
+	padding: 0 5%;
+	text-align: center;
+	font-style: italic;
+}
+
+.divider:before, .divider:after {
+	content: ' ~ ';
+}
+
+[data-activity-list] {
+	position: relative;
+}
+
+[data-activity-list]:before {
+	content: ' ';
+	position: absolute;
+	left: 10px;
+	top: 0px;
+	background-color: black;
+	width: 4px;
+	bottom: 0px;
+	z-index: -1;
 }

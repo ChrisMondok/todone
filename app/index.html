@@ -3,14 +3,24 @@
 	<head>
 		<title> Hello World </title>
 		<link rel="stylesheet" type="text/css" href="style.css"/>
+		<script src="sugar-1.4.1-custom.min.js"> </script>
 		<script src="script.js" > </script>
+		<meta name="viewport" content="height=device-height, width=device-width, user-scalable=no"/>
 	</head>
 	<body>
-		<ol>
-		</ol>
-		<form method="POST" action="/api/activities">
-			<fieldset>
-				<legend> Create Activity </legend>
+		<div data-activity-list>
+			<div class="time-line"> </div>
+		</div>
+		<div class="toolbar-space-eater"> </div>
+		<div class="bottom toolbar">
+			<button data-action="show-form"> New </button>
+		</div>
+		<div class="bottom drawer closed">
+			<form class="create-form" method="POST" action="/api/activities">
+				<header>
+					New Activity
+					<button type="button" data-action="hide-form"> Cancel </button>
+				</header>
 				<label>
 					Name
 					<input name="name" />
@@ -26,9 +36,14 @@
 					<input name="time" type="time" />
 				</label>
 
-				<button> Save </button>
-			</fieldset>
-		</form>
+				<label>
+					Color
+					<input name="color" type="color" />
+				</label>
+
+				<button type="submit"> Save </button>
+			</form>
+		</div>
 	</body>
 </html>
 
