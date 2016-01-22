@@ -3,6 +3,51 @@ var list = null;
 var pixelsPerMinute = 1;
 
 addEventListener('load', function() {
+	getActivities();
+
+	document.querySelector('[data-action=show-form]').addEventListener('click', openDrawer);
+	document.querySelector('[data-action=hide-form]').addEventListener('click', closeDrawer);
+
+	var form = document.querySelector('form');
+	form.addEventListener('submit', function(e) {
+		try {
+			var req = submitForm(form);
+			req.addEventListener('load', function(loadEvent) {
+				if(req.status == 200) {
+					activities.push(hydrateActivity(JSON.parse(req.responseText)));
+					renderActivities();
+					closeDrawer();
+				}
+				else
+					alert("Something broke :/");
+			});
+		} finally {
+			e.preventDefault();
+		}
+	});
+});
+
+function openDrawer() {
+	var drawer = document.querySelector('.drawer');
+	drawer.classList.remove('closed');
+	drawer.classList.add('open');
+
+	var now = new Date();
+	document.querySelector('[name=time]').value = now.format('{HH}:{mm}');
+	document.querySelector('[name=date]').value = now.format('{yyyy}-{MM}-{dd}');
+
+	list.classList.add('blurry');
+}
+
+function closeDrawer() {
+	var drawer = document.querySelector('.drawer');
+	drawer.classList.remove('open');
+	drawer.classList.add('closed');
+
+	list.classList.remove('blurry');
+}
+
+function getActivities() {
 	var req = new XMLHttpRequest();
 	list = document.querySelector('[data-activity-list]');
 	req.open('GET', '/api/activities');
@@ -11,36 +56,18 @@ addEventListener('load', function() {
 		renderActivities();
 	});
 	req.send();
-
-	var drawer = document.querySelector('.drawer');
-
-	document.querySelector('[data-action=hide-form]').addEventListener('click', function() {
-		drawer.classList.remove('open');
-		drawer.classList.add('closed');
-
-		list.classList.remove('blurry');
-	});
-
-	document.querySelector('[data-action=show-form]').addEventListener('click', function() {
-		drawer.classList.remove('closed');
-		drawer.classList.add('open');
-
-		list.classList.add('blurry');
-	});
-
-	document.querySelector('form').addEventListener('submit', function(e) {
-		e.preventDefault();
-	});
-});
+}
 
 function parseActivities(json) {
-	return JSON.parse(json).map(function(x) {
-		x.time = Date.create(x.date+'T'+x.time);
-		x.date = Date.create(x.date);
-		return x;
-	}).sort(function(x, y) {
+	return JSON.parse(json).map(hydrateActivity).sort(function(x, y) {
 		return x.time - y.time;
 	});
+}
+
+function hydrateActivity(obj) {
+	obj.time = Date.create(obj.date+'T'+obj.time);
+	obj.date = Date.create(obj.date);
+	return obj;
 }
 
 function renderActivities() {
@@ -98,4 +125,17 @@ function createActivityNode(activity) {
 	label.appendChild(time);
 
 	return node;
+}
+
+function submitForm(form) {
+	var payload = {};
+	for(var i = 0; i < form.elements.length; i++) {
+		if(form.elements[i].name)
+			payload[form.elements[i].name] = form.elements[i].value;
+	}
+	var req = new XMLHttpRequest();
+	req.open(form.method, form.action);
+	req.setRequestHeader('Content-Type', 'application/json');
+	req.send(JSON.stringify(payload));
+	return req;
 }
