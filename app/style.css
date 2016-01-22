@@ -114,6 +114,8 @@ header button {
 
 [data-activity-list] {
 	position: relative;
+	max-width: 600px;
+	margin: 0 auto;
 }
 
 [data-activity-list]:before {
